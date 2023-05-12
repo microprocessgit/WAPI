@@ -1,0 +1,47 @@
+<%- include('cabecalho'); %>
+  <div class="row">
+    <div class="col-8">
+      <h3 class="text-secondary m-5">Clientes Cadastrados</h3>
+    </div>
+  </div>
+  <div class="d-flex justify-content-center">
+    <div class="col-10">
+      <div class="row mb-3 ms-3">
+        <div class="col-sm-2">
+          <h5 class="text-secondary">Cliente</h5>
+        </div>
+        <div class="col-sm-2">
+          <h5 class="text-secondary">Chave</h5>
+        </div>
+        <div class="col-sm-6">
+          <h5 class="text-secondary">Webhook</h5>
+        </div>
+        <div class="col-sm-2">
+          <a href="form"  class="btn btn-success" role="button" aria-disabled="true">Cadastrar Cliente</a>
+        </div>
+      </div>
+      <hr />
+      <div class="borda">
+        <%- include('mensagem'); %>
+          <% for(let item of dados){%>
+            <div class="row mb-3" id="id_<%= item.pkId%>">
+              <div class="col-sm-2 text-break info-cadastradas">
+                <%= item.client %>
+              </div>
+              <div class="col-sm-2 text-break info-cadastradas">
+                <%= item.key %>
+              </div>
+              <div class="col-sm-6 text-break info-cadastradas">
+                <%= item.webhook %>
+              </div>
+              <div class="col-sm-2 mt-2 d-flex justify-content-between">
+                <i class=" text-danger material-icons cursor" onclick="deletarCadastro(<%= item.pkId%>)">delete</i>
+                <i class="text-success material-icons cursor"
+                  onclick="editarCadastro(<%= item.pkId %>,'<%= item.client %>', '<%= item.key %>', '<%= item.webhook %>')">edit</i>
+              </div>
+            </div>
+            <% } %>
+      </div>
+    </div>
+  </div>
+  <%- include('rodape'); %>

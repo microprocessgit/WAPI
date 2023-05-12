@@ -1,0 +1,22 @@
+.cabecalho {
+  background-color: #7795a3;
+}
+
+.borda {
+  border: 1px solid #dddddd;
+  padding: 30px;
+}
+
+.link {
+  font-weight: 600;
+}
+
+.link:hover {
+  color: #296781;
+}
+.cursor{
+  cursor: pointer;
+}
+.textEnd{
+  text-align: end;
+}
