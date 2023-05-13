@@ -6,7 +6,7 @@ import makeWASocket, {
   makeCacheableSignalKeyStore,
 } from '@adiwajshing/baileys';
 import type { Boom } from '@hapi/boom';
-import { initStore, Store, useSession } from '@microprocess/baileys-store';
+import { initStore, Store, useSession } from '@microprocess/wapi-store';
 import type { Response } from 'express';
 // import { writeFile } from 'fs/promises';
 // import { join } from 'path';

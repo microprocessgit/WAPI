@@ -1,4 +1,4 @@
-import { serializePrisma } from '@microprocess/baileys-store';
+import { serializePrisma } from '@microprocess/wapi-store';
 import type { RequestHandler } from 'express';
 import { logger, prisma } from '../shared';
 
