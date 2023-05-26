@@ -52,4 +52,8 @@ router.post(
   body('stream').notEmpty(), 
   controller.upload )
 
+  router.post(
+    '/readSentMessages', 
+    body('myIds').notEmpty(), 
+    controller.readSentMessages )
 export default router;

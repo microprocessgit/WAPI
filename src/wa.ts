@@ -155,7 +155,7 @@ export async function createSession(options: createSessionOptions) {
     ...socketConfig,
     auth: {
       creds: state.creds,
-      keys: makeCacheableSignalKeyStore(state.keys, logger),
+      keys: makeCacheableSignalKeyStore(state.keys as any, logger),
     },
     logger,
     shouldIgnoreJid: (jid) => isJidBroadcast(jid),

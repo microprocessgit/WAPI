@@ -1,4 +1,4 @@
-import { find, update, insertMessageFila } from './services/client';
+import { find, update, insertMessageFila, getSentMessages } from './services/client';
 import fs, { mkdir } from 'fs';
 
 const clientsList = new Map();
@@ -86,4 +86,15 @@ export async function addMessageToFila(req: any) {
   return await insertMessageFila(req);
 }
 
-
+export async function readMessages(req: any) {
+  const myIdsList = req.body.myIds.split(',');
+  let data = [];
+  for (const val of myIdsList) {
+    const res = await getSentMessages(val);
+      if(res){
+        data.push({ message: res.message, 
+          timestamp: Number(res.messageTimestamp), id:res.id, myId:res.myId});
+      }
+  }
+  return data;
+}

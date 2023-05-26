@@ -53,7 +53,18 @@ const client = req.params.sessionId;
     }});
     return true;
   } catch (e) {
-    logger.error(e, 'An error occured during message create'+jid);
+export async function getSentMessages(myId: any) {
+  try {
+    const res = await prisma.message.findMany(
+      {
+        where: {
+          myId: myId
+        }
+      }
+    );
+    return res[0];
+  } catch (e) {
+    logger.error(e, 'An error occurred while querying myId');
     return false;
   }
 }
