@@ -34,7 +34,7 @@ export const add: RequestHandler = async (req, res) => {
     createSession({ sessionId, res, readIncomingMessages, socketConfig });
     updateClients(req);
   }else
-    return res.status(406).json({ error: 'Authentication failed.' }); 
+    return res.status(406).json({ error: 'Authentication failed' }); 
 };
 
 export const addSSE: RequestHandler = async (req, res) => {
