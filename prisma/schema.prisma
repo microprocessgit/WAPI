@@ -12,37 +12,37 @@ datasource db {
 
 model Chat {
   pkId                      Int      @id @default(autoincrement())
-  sessionId                 String   @db.VarChar(128)
+  sessionId                 String   @db.Text
   archived                  Boolean?
   contactPrimaryIdentityKey Bytes?
   conversationTimestamp     BigInt?
   createdAt                 BigInt?
-  createdBy                 String?  @db.VarChar(128)
-  description               String?  @db.VarChar(255)
+  createdBy                 String?  @db.Text
+  description               String?  @db.Text
   disappearingMode          Json?
-  displayName               String?  @db.VarChar(128)
+  displayName               String?  @db.Text
   endOfHistoryTransfer      Boolean?
   endOfHistoryTransferType  Int?
   ephemeralExpiration       Int?
   ephemeralSettingTimestamp BigInt?
-  id                        String   @db.VarChar(128)
+  id                        String   @db.Text
   isDefaultSubgroup         Boolean?
   isParentGroup             Boolean?
   lastMsgTimestamp          BigInt?
-  lidJid                    String?  @db.VarChar(128)
+  lidJid                    String?  @db.Text
   markedAsUnread            Boolean?
   mediaVisibility           Int?
   messages                  Json?
   muteEndTime               BigInt?
-  name                      String?  @db.VarChar(128)
-  newJid                    String?  @db.VarChar(128)
+  name                      String?  @db.Text
+  newJid                    String?  @db.Text
   notSpam                   Boolean?
-  oldJid                    String?  @db.VarChar(128)
-  pHash                     String?  @db.VarChar(128)
-  parentGroupId             String?  @db.VarChar(128)
+  oldJid                    String?  @db.Text
+  pHash                     String?  @db.Text
+  parentGroupId             String?  @db.Text
   participant               Json?
   pinned                    Int?
-  pnJid                     String?  @db.VarChar(128)
+  pnJid                     String?  @db.Text
   pnhDuplicateLidThread     Boolean?
   readOnly                  Boolean?
   shareOwnPn                Boolean?
