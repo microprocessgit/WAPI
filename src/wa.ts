@@ -1,4 +1,4 @@
-import type { ConnectionState, proto, SignalKeyStore, SocketConfig, WASocket } from '@adiwajshing/baileys';
+import type { ConnectionState, proto, SocketConfig, WASocket } from '@adiwajshing/baileys';
 import makeWASocket, {
   Browsers,
   DisconnectReason,
@@ -157,7 +157,7 @@ export async function createSession(options: createSessionOptions) {
     ...socketConfig,
     auth: {
       creds: state.creds,
-      keys: makeCacheableSignalKeyStore(state.keys as SignalKeyStore, logger),
+      keys: makeCacheableSignalKeyStore(state.keys as any, logger),
     },
     logger,
     shouldIgnoreJid: (jid) => isJidBroadcast(jid),

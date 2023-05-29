@@ -43,13 +43,14 @@ export const sendToFila: RequestHandler = async (req, res) => {
     const session = getSession(req.params.sessionId)!;
 
     const exists = await jidExists(session, jid, type);
-    if (!exists) return res.status(400).json({ error: 'JID does not exists', statusCode: 400 });
-
+    if (!exists){
+      return res.status(400).json({ error: 'Jid does not exists', statusCode: 400 });
+    }
     addMessageToFila(req).then(result =>{
       if (result) {
         res.status(200).json({ message:'Mensagem adicionada a fila', statusCode: 200 });
       }else{
-        res.status(400).json({ error: 'JID does not exists', statusCode: 400 });
+        res.status(400).json({ error: 'Failed to add message to queue', statusCode: 400 });
       }
     })
   
@@ -62,14 +63,14 @@ export const sendToFila: RequestHandler = async (req, res) => {
 
 export const send: RequestHandler = async (req, res) => {
   try {
-    const { jid, type = 'number', message, options, client } = req.body;
+    const { jid, type = 'number', message, options, client, myId } = req.body;
     const session = getSession(client)!;
 
     const exists = await jidExists(session, jid, type);
-    if (!exists) return res.status(400).json({ error: 'JID does not exists', statusCode: 400 });
+    if (!exists) return res.status(400).json({ error: 'Jid does not exists', statusCode: 400 });
 
     const data = await session.sendMessage(jid, message, options);
-    webhook(client, 'sent/messages', data);
+    webhook(client, 'fila-message-sent', { data, myId, statusCode: 200 });
     deleteMedia(message);
     res.status(200).json({ data, statusCode: 200 });
   } catch (e) {
