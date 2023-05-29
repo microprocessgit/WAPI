@@ -146,6 +146,7 @@ model Message {
   urlText                         Boolean?
   userReceipt                     Json?
   verifiedBizName                 String?  @db.VarChar(128)
+  myId                            String?
 
   @@unique([sessionId, remoteJid, id], map: "unique_message_key_per_session_id")
   @@index([sessionId])
@@ -171,12 +172,13 @@ model Client {
   @@index([client])
 }
 
-model MessageToFila {
+model MessageFila {
   pkId    Int    @id @default(autoincrement())
   jid     String @db.VarChar(500)
   message Json?
   options String? @db.VarChar(500)
-  client String? @db.VarChar(500)
+  client  String? @db.VarChar(500)
+  myId    String? @db.VarChar(200)
 
   @@index([jid])
 }
