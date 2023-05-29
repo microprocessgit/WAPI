@@ -19,10 +19,11 @@
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/index.ts"
   },
   "dependencies": {
+    "@adiwajshing/baileys": "https://github.com/WhiskeySockets/Baileys",
+    "@adiwajshing/keyed-db": "^0.2.4",
     "@hapi/boom": "^10.0.0",
     "@microprocess/wapi-store": "^1.0.0",
     "@prisma/client": "^4.14.0",
-    "@adiwajshing/baileys": "https://github.com/WhiskeySockets/Baileys",
     "connect-flash": "^0.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
