@@ -5,9 +5,8 @@ import type { RequestHandler } from 'express';
 import { logger, prisma } from '../shared';
 import { delay as delayMs } from '../utils';
 import { getSession, jidExists } from '../wa';
-import { uploadMedia, deleteMedia, addMessageToFila } from '../zap-util';
+import { uploadMedia, deleteMedia, addMessageToFila, readMessages } from '../zap-util';
 import { webhook } from '../services/webhook';
-import { get } from '../services/request';
 
 
 export const list: RequestHandler = async (req, res) => {
@@ -140,6 +139,18 @@ export const upload: RequestHandler = async (req, res) => {
     const data = await uploadMedia(req);
     const message = 'Meta data successfully.';
     res.status(200).json({ message, data, statusCode: 200 });
+  } catch (err) {
+    res.status(404).json({
+      error: "Could not upload the media from message." + err,
+      statusCode: 404
+    })
+  }
+};
+
+export const readSentMessages: RequestHandler = async (req, res) => {
+  try {
+    const data = await readMessages(req);
+    res.status(200).json({ data, statusCode: 200 });
   } catch (err) {
     res.status(404).json({
       error: "Could not upload the media from message." + err,

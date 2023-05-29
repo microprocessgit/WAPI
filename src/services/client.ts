@@ -1,3 +1,4 @@
+import { toString } from 'qrcode';
 import { prisma, logger } from '../shared';
 
 export async function insert(client: any) {
@@ -43,13 +44,13 @@ export async function deleteClient(id: any) {
 
 export async function insertMessageFila(req: any) {
   const { jid, message, options, myId } = req.body;
-const client = req.params.sessionId;
+  const client = req.params.sessionId;
   try {
     await prisma.messageFila.create({
       data: {
         jid: jid,
-      message: message,
-      options: options,
+        message: message,
+        options: options,
         client: client,
         myId: myId
       }
@@ -60,6 +61,19 @@ const client = req.params.sessionId;
     return false;
   }
 }
+
+export async function getSentMessages(myId: any) {
+  try {
+    const res = await prisma.message.findMany(
+      {
+        where: {
+          myId: myId
+        }
+      }
+    );
+    return res[0];
+  } catch (e) {
+    logger.error(e, 'An error occurred while querying myId');
     return false;
   }
 }
