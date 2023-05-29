@@ -1,17 +1,20 @@
 import { getWebhook } from '../zap-util';
 import { post } from './request';
 
-export function webhook(instance:any, type:any, data:any) {
+export function webhook(instance:any, type:any, json:any) {
   const host = getWebhook(instance);
+  let { myId, statusCode, data } = json;
   var content;
-  content = {instance, type, data}
+  if(type.split("/")[1] == 'qrcode'){
+    data = json;
+  }
+  content = {instance, type,  myId, statusCode, data}
   //comment if condition to send messages
-  let messageType = type.split("/")[0]; 
-  if ((messageType != 'connection') && (messageType != 'sent')){
+  if ((type.split("/")[0] != 'connection') && (type != 'fila-message-sent')){
     content = {};
   }
 
-  const res = post(`${host}/`, content);
+  const res = post(`${host}/wahook/${type}`, content);
   console.log(res);
 
 }
