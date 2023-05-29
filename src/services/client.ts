@@ -41,19 +41,25 @@ export async function deleteClient(id: any) {
   })
 }
 
-export async function insertMessageFila(req: any){
-  const { jid, message, options } = req.body;
+export async function insertMessageFila(req: any) {
+  const { jid, message, options, myId } = req.body;
 const client = req.params.sessionId;
   try {
-      await prisma.messageToFila.create({ data:{
-      jid:jid,
+    await prisma.messageFila.create({
+      data: {
+        jid: jid,
       message: message,
       options: options,
-      client: client
-    }});
+        client: client,
+        myId: myId
+      }
+    });
     return true;
   } catch (e) {
-    logger.error(e, 'An error occured during message create'+jid);
+    logger.error(e, 'An error occured during message create' + jid);
+    return false;
+  }
+}
     return false;
   }
 }
