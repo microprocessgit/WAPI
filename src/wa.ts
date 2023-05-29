@@ -1,4 +1,4 @@
-import type { ConnectionState, proto, SocketConfig, WASocket } from '@adiwajshing/baileys';
+import type { ConnectionState, proto, SignalKeyStore, SocketConfig, WASocket } from '@adiwajshing/baileys';
 import makeWASocket, {
   Browsers,
   DisconnectReason,
@@ -72,12 +72,14 @@ export async function createSession(options: createSessionOptions) {
 
   const destroy = async (logout = true) => {
     try {
-      await Promise.all([
-        logout && socket.logout(),
+      if (process.env.DELETEALLSESSION == 'true') {
         prisma.chat.deleteMany({ where: { sessionId } }),
         prisma.contact.deleteMany({ where: { sessionId } }),
         prisma.message.deleteMany({ where: { sessionId } }),
-        prisma.groupMetadata.deleteMany({ where: { sessionId } }),
+        prisma.groupMetadata.deleteMany({ where: { sessionId } })
+      }
+      await Promise.all([
+        logout && socket.logout(),
         prisma.session.deleteMany({ where: { sessionId } }),
       ]);
     } catch (e) {
@@ -155,7 +157,7 @@ export async function createSession(options: createSessionOptions) {
     ...socketConfig,
     auth: {
       creds: state.creds,
-      keys: makeCacheableSignalKeyStore(state.keys, logger),
+      keys: makeCacheableSignalKeyStore(state.keys as SignalKeyStore, logger),
     },
     logger,
     shouldIgnoreJid: (jid) => isJidBroadcast(jid),
