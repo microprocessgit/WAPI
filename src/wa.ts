@@ -1,10 +1,10 @@
-import type { ConnectionState, proto, SocketConfig, WASocket } from '@adiwajshing/baileys';
+import type { ConnectionState, proto, SocketConfig, WASocket } from '@whiskeysockets/baileys';
 import makeWASocket, {
   Browsers,
   DisconnectReason,
   isJidBroadcast,
   makeCacheableSignalKeyStore,
-} from '@adiwajshing/baileys';
+} from '@whiskeysockets/baileys';
 import type { Boom } from '@hapi/boom';
 import { initStore, Store, useSession } from '@microprocess/wapi-store';
 import type { Response } from 'express';
