@@ -147,9 +147,18 @@ model Message {
   userReceipt                     Json?
   verifiedBizName                 String?  @db.VarChar(128)
   myId                            String?
+  statusOfSend                    StatusOfSend @default(NOTSENT)
+  isAction                        Boolean @default(false)
 
   @@unique([sessionId, remoteJid, id], map: "unique_message_key_per_session_id")
   @@index([sessionId])
+}
+
+enum StatusOfSend {
+  NOTSENT
+  SENT
+  NOTANSWERED
+  ANSWERED
 }
 
 model Session {
@@ -168,17 +177,19 @@ model Client {
   client  String @unique
   key     String @db.VarChar(128)
   webhook String? @db.VarChar(500)
+  telefone String? @db.VarChar(500)
 
   @@index([client])
 }
 
 model MessageFila {
-  pkId    Int    @id @default(autoincrement())
-  jid     String @db.VarChar(500)
-  message Json?
-  options String? @db.VarChar(500)
-  client  String? @db.VarChar(500)
-  myId    String? @db.VarChar(200)
+  pkId            Int    @id @default(autoincrement())
+  jid             String @db.VarChar(500)
+  message         Json?
+  options         String? @db.VarChar(500)
+  client          String? @db.VarChar(500)
+  myId            String? @db.VarChar(200)
+  isAction        Boolean @default(false)
 
   @@index([jid])
 }
