@@ -14,7 +14,7 @@ export function webhook(instance:any, type:any, json:any) {
     content = {};
   }
 
-  const res = post(`${host}/wahook/${type}`, content);
+  const res = post(`${host}/wahook/${type}`, content, { "Content-type": "application/json; charset=UTF-8" }, 'json');
   console.log(res);
 
 }

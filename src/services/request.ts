@@ -1,31 +1,27 @@
-import fetch from 'node-fetch';
+import axios from 'axios';
 
-export async function post(url: any, data: any) {
+
+export async function get(url: any, headers: any, responseType: any) {
   try {
-    const response = await fetch(url,
+    return await axios.get(url,
       {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: { "Content-type": "application/json; charset=UTF-8" }
+        headers: headers,
+        responseType: responseType
       });
-    return await response.text();
   } catch (e) {
     console.log(e);
-    return { message: e, statusCode: 500 };
   }
 }
 
-export async function get(url: any) {
+
+export async function post(url: any, data: any, headers: any, responseType: any) {
   try {
-    const response = await fetch(url,
-      {
-        method: 'GET',
-        headers: { "Content-type": "application/json; charset=UTF-8" }
-      });
-    const res = await response.json();
-    return res;
+    return await axios.post(url,
+      JSON.stringify(data), {
+      headers: headers,
+      responseType: responseType
+    })
   } catch (e) {
     console.log(e);
-    return { message: e, statusCode: 500 };
   }
 }
