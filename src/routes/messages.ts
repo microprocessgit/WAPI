@@ -50,10 +50,17 @@ router.post(
 router.post(
   '/upload', 
   body('stream').notEmpty(), 
-  controller.upload )
+  controller.upload)
 
-  router.post(
-    '/readSentMessages', 
-    body('myIds').notEmpty(), 
-    controller.readSentMessages )
+router.post(
+  '/readSentMessages', 
+  body('myIds').notEmpty(), 
+  controller.readSentMessages)
+
+
+router.post(
+  '/statusOfSend', 
+  controller.statusOfSend)
+
 export default router;
+
