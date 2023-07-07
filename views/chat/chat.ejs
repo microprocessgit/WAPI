@@ -1,0 +1,86 @@
+<%- include('cabecalho'); %>
+  <div class="box-body">
+    <div class="direct-chat-messages">
+      <% for(let msg of messages.messages){%>
+        <% if(msg.key.fromMe==false){%>
+          <div class="outside mb-4">
+            <div class="mb-2">
+              <% if(messages.urlImage != undefined){%>
+                <img class="direct-chat-img" src="./downloads/<%=messages.urlImage%>" alt="message user image">
+              <%}%>
+              <span class="direct-chat-name ">
+                <%= msg.pushName %>
+              </span>
+              <br>
+            </div>
+            <div class="col-4">
+              <div class="received message">
+                <%- include('conversation', {msg, getFileName});%>
+              </div>
+            </div>
+            <div>
+              <span class="direct-chat-timestamp">
+                <%= new Date(Number(msg.messageTimestamp) * 1000).toLocaleString('pt-BR', { month: 'long' ,
+                  day: 'numeric' , time:'numeric', timeZone: 'America/Sao_Paulo'});%>
+                  <%= new Date(Number(msg.messageTimestamp) * 1000).toLocaleTimeString('pt-BR', { hour: "2-digit" ,
+                    minute: "2-digit", timeZone: 'America/Sao_Paulo'});%>
+              </span>
+            </div>
+          </div>
+          <% }else{ %>
+            <div class="outside mb-4">
+              <div class="d-flex flex-row-reverse">
+                <div class="col-6 text-end mb-2">
+                  <span class="direct-chat-name">
+                    Você
+                  </span>
+                  <% if(messages.urlImageFromMe != undefined){%>
+                  <img class="direct-chat-img" src="./downloads/<%=messages.urlImageFromMe%>" alt="message user image">
+                  <%}%>
+                </div>
+              </div>
+              <div class="d-flex flex-row-reverse">
+                <div class="col-4">
+                <div class="sent message float-end">
+                  <%- include('conversation', {msg, getFileName});%>
+                </div>
+              </div>
+              </div>
+              <div>
+                <span class="direct-chat-timestamp d-flex flex-row-reverse">
+                  <%= new Date(Number(msg.messageTimestamp) * 1000).toLocaleString('pt-BR', { month: 'long' ,
+                    day: 'numeric' , time:'numeric', timeZone: 'America/Sao_Paulo' });%>
+                    <%= new Date(Number(msg.messageTimestamp) * 1000).toLocaleTimeString('pt-BR', { hour: "2-digit" ,
+                      minute: "2-digit", timeZone: 'America/Sao_Paulo'});%>
+                </span>
+              </div>
+            </div>
+        <%} }%>
+    </div>
+
+    <% if(messages.messages[0] != undefined){%>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Excluir mensagens</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Deseja excluir as mensagens?
+          </div>
+          <div class="modal-footer">
+            <form action="delete/" method="POST">
+              <input type="hidden" name="timestamp" value="<%=Number(messages.messages[0].messageTimestamp)%>" />
+              <input type="hidden" name="remoteJid" value="<%=messages.messages[0].remoteJid%>" />
+              <button type="button" class="btn btn-cancelar" data-bs-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-sim" data-bs-dismiss="modal">Sim</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <%}%>
+  </div>
+  <%- include('rodape'); %>

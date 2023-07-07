@@ -1,0 +1,40 @@
+  <% if(msg.message.conversation != undefined){ %>
+    <span class="text">
+      <%= msg.message.conversation %>
+    </span>
+  <% } else if(msg.message.extendedTextMessage != undefined) {%>
+    <span id="text-span" class="text text-span">
+        <%= msg.message.extendedTextMessage.text.replaceAll('\n', '<br>');%> 
+    </span>
+  <% } else if((msg.message.imageMessage != undefined) ||
+    (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.imageMessage != undefined)) {%>
+    <span class="text">
+    <img class="w-100" src="./downloads/<%=getFileName(msg)%>" alt="">
+    </span>
+  <% } else if((msg.message.videoMessage != undefined) ||
+    (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.imageMessage != undefined)) {%>
+    <span class="text">
+      <video class="w-100" src="./downloads/<%=getFileName(msg)%>" controls>
+        Your browser does not support the video tag.
+      </video>
+    </span>
+    <% } else if((msg.message.audioMessage != undefined) ||
+      (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.imageMessage != undefined)) {%>
+      <span class="text">
+        <audio controls>
+          <source src="./downloads/<%=getFileName(msg)%>" type="audio/ogg">
+          <source src="./downloads/<%=getFileName(msg)%>" type="audio/mp3">
+          Your browser does not support the video tag.
+        </audio>
+      </span>
+    <% } else if((msg.message.documentMessage != undefined) ||
+      (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.imageMessage != undefined)) {%>
+      <span class="text">
+      <a href="./downloads/<%=getFileName(msg)%>" target="#">
+        <img src="data:image/jpeg;base64,<%= msg.message.documentMessage.jpegThumbnail %>"/>
+      </a>
+      </span>
+    <%}%>
+
+
+
