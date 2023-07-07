@@ -3,7 +3,7 @@ import 'dotenv/config';
 import express from 'express';
 import routes from './routes';
 import { init } from './wa';
-import views from './clients/views'
+import views from './views'
 
 const app = express();
 app.use(cors());
