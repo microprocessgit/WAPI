@@ -13,7 +13,10 @@
         <div class="col-sm-2">
           <h5 class="text-secondary">Chave</h5>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-2">
+          <h5 class="text-secondary">Telefone</h5>
+        </div>
+        <div class="col-sm-4">
           <h5 class="text-secondary">Webhook</h5>
         </div>
         <div class="col-sm-2">
@@ -31,13 +34,16 @@
               <div class="col-sm-2 text-break info-cadastradas">
                 <%= item.key %>
               </div>
-              <div class="col-sm-6 text-break info-cadastradas">
+              <div class="col-sm-2 text-break info-cadastradas">
+                <%= item.telefone %>
+              </div>
+              <div class="col-sm-5 text-break info-cadastradas">
                 <%= item.webhook %>
               </div>
-              <div class="col-sm-2 mt-2 d-flex justify-content-between">
+              <div class="col-sm-1 mt-2 d-flex justify-content-between">
                 <i class=" text-danger material-icons cursor" onclick="deletarCadastro(<%= item.pkId%>)">delete</i>
                 <i class="text-success material-icons cursor"
-                  onclick="editarCadastro(<%= item.pkId %>,'<%= item.client %>', '<%= item.key %>', '<%= item.webhook %>')">edit</i>
+                  onclick="editarCadastro(<%= item.pkId %>,'<%= item.client %>', '<%= item.key %>', '<%= item.webhook %>', '<%= item.telefone %>')">edit</i>
               </div>
             </div>
             <% } %>

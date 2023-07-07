@@ -23,6 +23,11 @@
           <label class="form-label">Webhook</label>
           <input type="text" class="form-control" id="webhook" name="webhook" aria-describedby="">
         </div>
+        <div class="mb-3">
+          <label class="form-label">Telefone</label>
+          <input maxlength="11"  placeholder="+55(00) 0000-0000" type="text" class="form-control" id="telefone" name="telefone" aria-describedby=""
+          oninput="maskPhoneNumber(this)">
+        </div>
         <button type="submit" class="btn btn-primary">Gravar</button>
       </form>
     </div>

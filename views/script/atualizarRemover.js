@@ -1,5 +1,5 @@
 
-function editarCadastro(pkId, client, key, webhook) {
+function editarCadastro(pkId, client, key, webhook, telefone) {
 	let form = document.createElement('form')
 	form.action = "editar"
 	form.method = "post"
@@ -8,13 +8,16 @@ function editarCadastro(pkId, client, key, webhook) {
 	div1.className = "row mb-5";
 
 	let div2 = document.createElement('div')
-	div2.className = "col-sm-3";
+	div2.className = "col-sm-2";
 
 	let div3 = document.createElement('div')
-	div3.className = "col-sm-3";
+	div3.className = "col-sm-2";
 
   let div4 = document.createElement('div')
-	div4.className = "col-sm-6";
+	div4.className = "col-sm-2";
+
+  let div5 = document.createElement('div')
+	div5.className = "col-sm-6";
 
 	let inputClient = document.createElement('input')
 	inputClient.type = "text"
@@ -36,6 +39,13 @@ function editarCadastro(pkId, client, key, webhook) {
 	inputWebhook.className = "form-control"
 	inputWebhook.value = webhook
 
+  let inputTelefone = document.createElement('input')
+	inputTelefone.type = "text"
+	inputTelefone.name = "telefone"
+	inputTelefone.className = "form-control"
+	inputTelefone.value = telefone
+  inputTelefone.setAttribute("onkeypress", "maskPhoneNumber(this);");
+
 	let inputId = document.createElement('input')
 	inputId.type = "hidden"
 	inputId.name = "pkId"
@@ -51,9 +61,11 @@ function editarCadastro(pkId, client, key, webhook) {
 	div1.appendChild(div2)
 	div1.appendChild(div3)
   div1.appendChild(div4)
+  div1.appendChild(div5)
 	div2.appendChild(inputClient)
 	div3.appendChild(inputKey)
-	div4.appendChild(inputWebhook)
+	div4.appendChild(inputTelefone)
+  div5.appendChild(inputWebhook)
 	div2.appendChild(inputId)
 	form.appendChild(button)
 
