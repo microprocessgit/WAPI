@@ -1,11 +1,11 @@
-import type { proto, WAGenericMediaMessage, WAMessage } from '@adiwajshing/baileys';
-import { downloadMediaMessage } from '@adiwajshing/baileys';
+import type { proto, WAGenericMediaMessage, WAMessage } from '@whiskeysockets/baileys';
+import { downloadMediaMessage } from '@whiskeysockets/baileys';
 import { serializePrisma } from '@microprocess/wapi-store';
 import type { RequestHandler } from 'express';
 import { logger, prisma } from '../shared';
 import { delay as delayMs } from '../utils';
 import { getSession, jidExists } from '../wa';
-import { uploadMedia, deleteMedia, addMessageToFila, readMessages } from '../zap-util';
+import { uploadMedia, deleteMedia, addMessageToFila, readMessages, setStatusOfSend} from '../zap-util';
 import { webhook } from '../services/webhook';
 
 
@@ -63,21 +63,21 @@ export const sendToFila: RequestHandler = async (req, res) => {
 
 export const send: RequestHandler = async (req, res) => {
   try {
-    const { jid, type = 'number', message, options, client, myId } = req.body;
+    const { jid, type = 'number', message, options, client } = req.body;
     const session = getSession(client)!;
 
     const exists = await jidExists(session, jid, type);
     if (!exists) return res.status(400).json({ error: 'Jid does not exists', statusCode: 400 });
 
     const data = await session.sendMessage(jid, message, options);
-    webhook(client, 'fila-message-sent', { data, myId, statusCode: 200 });
+    //webhook(client, 'fila-message-sent', { data, myId, statusCode: 200 });
     deleteMedia(message);
     res.status(200).json({ data, statusCode: 200 });
   } catch (e) {
     const message = 'An error occured during message send';
     logger.error(e, message);
     res.status(500).json({ error: message, statusCode: 500 });
-    webhook('', 'messages/sent', { error: message, statusCode: 500 });
+//    webhook('', 'messages/sent', { error: message, statusCode: 500 });
   }
 };
 
@@ -154,8 +154,21 @@ export const readSentMessages: RequestHandler = async (req, res) => {
     res.status(200).json({ data, statusCode: 200 });
   } catch (err) {
     res.status(404).json({
-      error: "Could not upload the media from message." + err,
+      error: "Unable to load messages." + err,
       statusCode: 404
     })
   }
 };
+
+export const statusOfSend: RequestHandler = async (req, res) => {
+  try {
+    await setStatusOfSend(req);
+    res.status(200).json({ data: 'Successfully', statusCode: 200 });
+  } catch (err) {
+    res.status(404).json({
+      error: "Unable to update message sending status." + err,
+      statusCode: 404
+    })
+  }
+};
+
