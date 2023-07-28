@@ -3,7 +3,7 @@ import makeWASocket, {
   Browsers,
   DisconnectReason,
   isJidBroadcast,
-  makeCacheableSignalKeyStore,
+  makeCacheableSignalKeyStore
 } from '@whiskeysockets/baileys';
 import type { Boom } from '@hapi/boom';
 import { initStore, Store, useSession } from '@microprocess/wapi-store';
@@ -11,7 +11,6 @@ import type { Response } from 'express';
 // import { writeFile } from 'fs/promises';
 // import { join } from 'path';
 import { toDataURL } from 'qrcode';
-import type { WebSocket } from 'ws';
 import { logger, prisma } from './shared';
 import { delay } from './utils';
 import { insertClients } from './zap-util';
@@ -220,7 +219,7 @@ export async function createSession(options: createSessionOptions) {
 
 export function getSessionStatus(session: Session) {
   const state = ['CONNECTING', 'CONNECTED', 'DISCONNECTING', 'DISCONNECTED'];
-  let status = state[(session.ws as WebSocket).readyState];
+  let status = state[session.ws.isConnecting ? 0 : session.ws.isOpen ? 1 : session.ws.isConnecting ? 2 : 3];
   status = session.user ? 'AUTHENTICATED' : status;
   return status;
 }
