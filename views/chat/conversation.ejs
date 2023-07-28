@@ -9,30 +9,42 @@
   <% } else if((msg.message.imageMessage != undefined) ||
     (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.imageMessage != undefined)) {%>
     <span class="text">
-    <img class="w-100" src="./downloads/<%=getFileName(msg)%>" alt="">
+      <img class="w-100" src="./downloads/<%=getFileName(msg)%>" alt="">
+      <span id="text-span" class="text text-span">
+        <%= msg.message.imageMessage.caption.replaceAll('\n', '<br>');%>
+      </span>
     </span>
   <% } else if((msg.message.videoMessage != undefined) ||
-    (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.imageMessage != undefined)) {%>
+    (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.videoMessage != undefined)) {%>
     <span class="text">
       <video class="w-100" src="./downloads/<%=getFileName(msg)%>" controls>
         Your browser does not support the video tag.
       </video>
+      <span id="text-span" class="text text-span">
+        <%= msg.message.videoMessage.caption.replaceAll('\n', '<br>');%>
+      </span>
     </span>
     <% } else if((msg.message.audioMessage != undefined) ||
-      (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.imageMessage != undefined)) {%>
+      (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.audioMessage != undefined)) {%>
       <span class="text">
         <audio controls>
           <source src="./downloads/<%=getFileName(msg)%>" type="audio/ogg">
           <source src="./downloads/<%=getFileName(msg)%>" type="audio/mp3">
           Your browser does not support the video tag.
         </audio>
+        <span id="text-span" class="text text-span">
+          <%= msg.message.audioMessage.caption.replaceAll('\n', '<br>');%>
+        </span>
       </span>
     <% } else if((msg.message.documentMessage != undefined) ||
-      (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.imageMessage != undefined)) {%>
+      (msg.message.extendedTextMessage?.contextInfo?.quotedMessage.documentMessage != undefined)) {%>
       <span class="text">
       <a href="./downloads/<%=getFileName(msg)%>" target="#">
-        <img src="data:image/jpeg;base64,<%= msg.message.documentMessage.jpegThumbnail %>"/>
+        <img class="w-100 doc" src="../img/documentation.png"/>
       </a>
+      <span id="text-span" class="text text-span">
+        <%= msg.message.documentMessage.caption.replaceAll('\n', '<br>');%>
+      </span>
       </span>
     <%}%>
 

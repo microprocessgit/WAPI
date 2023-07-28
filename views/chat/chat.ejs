@@ -2,7 +2,7 @@
   <div class="box-body">
     <div class="direct-chat-messages">
       <% for(let msg of messages.messages){%>
-        <% if(msg.key.fromMe==false){%>
+        <% if(msg.key.fromMe==false && msg.message.protocolMessage == undefined){%>
           <div class="outside mb-4">
             <div class="mb-2">
               <% if(messages.urlImage != undefined){%>
@@ -27,7 +27,7 @@
               </span>
             </div>
           </div>
-          <% }else{ %>
+          <% }else if(msg.message.protocolMessage == undefined){ %>
             <div class="outside mb-4">
               <div class="d-flex flex-row-reverse">
                 <div class="col-6 text-end mb-2">

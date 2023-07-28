@@ -296,6 +296,7 @@ body {
   border-radius: 12px;
   border: 1px solid #d7d7d7;
   padding: 5px;
+  min-width: 100px;
 }
 
 .sent {
@@ -351,4 +352,7 @@ body {
   }
   audio{
     width: 250px;
+  }
+  .doc:hover{
+    opacity: 0.5;
   }
