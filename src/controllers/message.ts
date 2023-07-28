@@ -6,7 +6,6 @@ import { logger, prisma } from '../shared';
 import { delay as delayMs } from '../utils';
 import { getSession, jidExists } from '../wa';
 import { uploadMedia, deleteMedia, addMessageToFila, readMessages, setStatusOfSend} from '../zap-util';
-import { webhook } from '../services/webhook';
 
 
 export const list: RequestHandler = async (req, res) => {
